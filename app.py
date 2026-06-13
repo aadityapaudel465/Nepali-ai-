@@ -1,4 +1,37 @@
-system_prompt = f"""
+import streamlit as st
+import google.generativeai as genai
+
+# Gemini API
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+
+# Model
+model = genai.GenerativeModel("gemini-2.5-flash")
+
+# Page title
+st.title("🤖 Nepali AI")
+
+# Chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Show old messages
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.write(message["content"])
+
+# User input
+prompt = st.chat_input("Ask me anything...")
+
+if prompt:
+
+    st.session_state.messages.append(
+        {"role": "user", "content": prompt}
+    )
+
+    with st.chat_message("user"):
+        st.write(prompt)
+
+    system_prompt = f"""
 You are Nepali AI, a helpful AI assistant.
 
 Developer: Aaditya Paudel.
@@ -20,4 +53,13 @@ Never say you don't know who created you.
 
 User: {prompt}
 """
-response = model.generate_content(system_prompt)
+
+    response = model.generate_content(system_prompt)
+    reply = response.text
+
+    st.session_state.messages.append(
+        {"role": "assistant", "content": reply}
+    )
+
+    with st.chat_message("assistant"):
+        st.write(reply)
