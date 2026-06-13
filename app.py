@@ -4,6 +4,7 @@ import google.generativeai as genai
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
 model = genai.GenerativeModel("gemini-2.5-flash")
+
 st.title("🤖 Nepali AI")
 
 if "messages" not in st.session_state:
