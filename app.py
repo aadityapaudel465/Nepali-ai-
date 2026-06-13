@@ -1,39 +1,39 @@
 import streamlit as st
+import google.generativeai as genai
 
-st.set_page_config(page_title="Nepali AI", page_icon="🤖")
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 st.title("🤖 Nepali AI")
 
-# Chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Display previous messages
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.write(message["content"])
 
-# User input
 prompt = st.chat_input("Ask me anything...")
 
 if prompt:
-    # Save user message
     st.session_state.messages.append(
         {"role": "user", "content": prompt}
     )
 
-    # Display user message
     with st.chat_message("user"):
         st.write(prompt)
 
-    # Temporary AI response
-    response = f"You said: {prompt}"
+    try:
+        response = model.generate_content(prompt)
+        reply = response.text
+    except Exception as e:
+        reply = f"Error: {e}"
 
-    # Save assistant response
     st.session_state.messages.append(
-        {"role": "assistant", "content": response}
+        {"role": "assistant", "content": reply}
     )
 
-    # Display assistant response
     with st.chat_message("assistant"):
-        st.write(response)
+        st.write(reply)
+        
