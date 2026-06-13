@@ -80,7 +80,7 @@ h1 {
 }
 </style>
 """, unsafe_allow_html=True)
-        with st.sidebar:
+with st.sidebar:
     st.title("🇳🇵 Nepali AI")
     st.write("Developer: Aaditya Paudel")
 
