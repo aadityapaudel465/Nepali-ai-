@@ -8,6 +8,8 @@ genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 # Page title
+st.image("logo.png", width=150)
+
 st.title("🤖 Nepali AI")
 
 # Chat history
@@ -65,7 +67,7 @@ User: {prompt}
         st.write(reply)
         st.set_page_config(
     page_title="Nepali AI",
-    page_icon="🤖",
+    page_icon="",
     layout="wide")
         st.markdown("""
 <style>

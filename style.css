@@ -1,0 +1,35 @@
+/* Anime Light Theme */
+
+.stApp {
+    background: linear-gradient(
+        135deg,
+        #fff7fb,
+        #fdf2f8,
+        #fce7f3
+    );
+}
+
+h1 {
+    color: #ec4899;
+    text-align: center;
+}
+
+[data-testid="stChatMessage"] {
+    background: rgba(255,255,255,0.8);
+    border-radius: 20px;
+    padding: 12px;
+    margin: 10px 0;
+}
+
+section[data-testid="stSidebar"] {
+    background-color: #fff0f6;
+}
+
+.stButton button {
+    border-radius: 15px;
+}
+with open("style.css") as f:
+    st.markdown(
+        f"<style>{f.read()}</style>",
+        unsafe_allow_html=True
+    )
