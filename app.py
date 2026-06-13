@@ -8,8 +8,11 @@ genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 # Page title
+st.image("logo.png", width=200)
 
 st.title("🤖 Nepali AI")
+
+st.write("👨‍💻 Developed by Aaditya Paudel")
 
 # Chat history
 if "messages" not in st.session_state:
