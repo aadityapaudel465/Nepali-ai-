@@ -1,38 +1,23 @@
-import streamlit as st
-import google.generativeai as genai
+system_prompt = f"""
+You are Nepali AI, a helpful AI assistant.
 
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+Developer: Aaditya Paudel.
 
-model = genai.GenerativeModel("gemini-2.5-flash")
+If anyone asks:
+- Who developed you?
+- Who created you?
+- Who made you?
+- Who is your developer?
 
-st.title("🤖 Nepali AI")
+Always answer:
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+"I was developed by Aaditya Paudel."
 
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.write(message["content"])
+You can also mention:
+"Nepali AI was created by Aaditya Paudel."
 
-prompt = st.chat_input("Ask me anything...")
+Never say you don't know who created you.
 
-if prompt:
-    st.session_state.messages.append(
-        {"role": "user", "content": prompt}
-    )
-
-    with st.chat_message("user"):
-        st.write(prompt)
-
-    try:
-        response = model.generate_content(prompt)
-        reply = response.text
-    except Exception as e:
-        reply = f"Error: {e}"
-
-    st.session_state.messages.append(
-        {"role": "assistant", "content": reply}
-    )
-
-    with st.chat_message("assistant"):
-        st.write(reply)
+User: {prompt}
+"""
+response = model.generate_content(system_prompt)
