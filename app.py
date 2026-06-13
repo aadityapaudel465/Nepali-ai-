@@ -66,8 +66,8 @@ User: {prompt}
         st.set_page_config(
     page_title="Nepali AI",
     page_icon="🤖",
-    layout="wide"
-)st.markdown("""
+    layout="wide")
+        st.markdown("""
 <style>
 .stApp {
     background-color: #0E1117;
