@@ -79,7 +79,7 @@ h1 {
     text-align: center;
 }
 </style>
-""", unsafe_allow_html=True)with st.sidebar:
+""", unsafe_allow_htm=True)with st.sidebar:
     st.title("🇳🇵 Nepali AI")
     st.write("Developer: Aaditya Paudel")
 
