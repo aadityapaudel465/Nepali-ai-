@@ -63,3 +63,26 @@ User: {prompt}
 
     with st.chat_message("assistant"):
         st.write(reply)
+        st.set_page_config(
+    page_title="Nepali AI",
+    page_icon="🤖",
+    layout="wide"
+)st.markdown("""
+<style>
+.stApp {
+    background-color: #0E1117;
+    color: white;
+}
+
+h1 {
+    color: #00D4FF;
+    text-align: center;
+}
+</style>
+""", unsafe_allow_html=True)with st.sidebar:
+    st.title("🇳🇵 Nepali AI")
+    st.write("Developer: Aaditya Paudel")
+
+    if st.button("🗑️ Clear Chat"):
+        st.session_state.messages = []
+        st.rerun()
