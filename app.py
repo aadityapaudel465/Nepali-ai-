@@ -26,8 +26,12 @@ for message in st.session_state.messages:
 # User input
 prompt = st.chat_input("Ask me anything...")
 
-if prompt:
+if prompt and prompt.strip():
+    When the user sends an empty message or greeting,
+    respond warmly and briefly.
 
+Example:
+"👋 Welcome to Nepali AI! How can I help you today?"
     st.session_state.messages.append(
         {"role": "user", "content": prompt}
     )
