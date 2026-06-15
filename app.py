@@ -28,7 +28,6 @@ prompt = st.chat_input("Ask me anything...")
 
 if prompt and prompt.strip():
     
-if prompt and prompt.strip():
 
     system_prompt = f"""
     ...
