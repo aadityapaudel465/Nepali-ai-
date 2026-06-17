@@ -26,7 +26,7 @@ for message in st.session_state.messages:
 # User input
 prompt = st.chat_input("Ask me anything...")
 
-    if prompt and prompt.strip():
+if prompt and prompt.strip():
 
     st.session_state.messages.append(
         {"role": "user", "content": prompt}
