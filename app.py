@@ -1,58 +1,53 @@
 import streamlit as st
 import google.generativeai as genai
 
+st.set_page_config(
+    page_title="Nepali AI",
+    layout="wide"
+)
+
 # Gemini API
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
-# Model
 model = genai.GenerativeModel("gemini-2.5-flash")
 
-# Page title
-st.image("logo.png", width=200)
+# Title
+st.title("🇳🇵 Nepali AI")
+st.write("Developed by Aaditya Paudel")
 
-st.title("🤖 Nepali AI")
+# Sidebar
+with st.sidebar:
+    st.title("🇳🇵 Nepali AI")
+    st.write("Developer: Aaditya Paudel")
 
-st.write("👨‍💻 Developed by Aaditya Paudel")
+    if st.button("🗑️ Clear Chat"):
+        st.session_state.messages = []
+        st.rerun()
 
-# Chat history
+# Chat History
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Show old messages
+# Display Previous Messages
 for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
+    avatar = "👤" if message["role"] == "user" else "logo.png"
+
+    with st.chat_message(message["role"], avatar=avatar):
         st.write(message["content"])
 
-# User input
+# User Input
 prompt = st.chat_input("Ask me anything...")
 
-if prompt and prompt.strip():
+if prompt:
 
+    # Save User Message
     st.session_state.messages.append(
         {"role": "user", "content": prompt}
     )
 
-    with st.chat_message("user"):
+    with st.chat_message("user", avatar="👤"):
         st.write(prompt)
 
-    system_prompt = f"""
-    You are Nepali AI.
-
-    User Message:
-    {prompt}
-    """
-
-    response = model.generate_content(system_prompt)
-
-    reply = response.text
-
-    st.session_state.messages.append(
-        {"role": "assistant", "content": reply}
-    )
-
-    with st.chat_message("assistant"):
-        st.write(reply)
-    
     system_prompt = f"""
 You are Nepali AI, a helpful AI assistant.
 
@@ -68,7 +63,8 @@ Always answer:
 
 "I was developed by Aaditya Paudel."
 
-You can also mention:
+You may also say:
+
 "Nepali AI was created by Aaditya Paudel."
 
 Never say you don't know who created you.
@@ -76,36 +72,15 @@ Never say you don't know who created you.
 User: {prompt}
 """
 
-    response = model.generate_content(system_prompt)
+    with st.spinner("Thinking..."):
+        response = model.generate_content(system_prompt)
+
     reply = response.text
 
+    # Save AI Message
     st.session_state.messages.append(
         {"role": "assistant", "content": reply}
     )
 
-    with st.chat_message("assistant"):
+    with st.chat_message("assistant", avatar="logo.png"):
         st.write(reply)
-        st.set_page_config(
-    page_title="Nepali AI",
-    page_icon="",
-    layout="wide")
-        st.markdown("""
-<style>
-.stApp {
-    background-color: #0E1117;
-    color: white;
-}
-
-h1 {
-    color: #00D4FF;
-    text-align: center;
-}
-</style>
-""", unsafe_allow_html=True)
-with st.sidebar:
-    st.title("🇳🇵 Nepali AI")
-    st.write("Developer: Aaditya Paudel")
-
-    if st.button("🗑️ Clear Chat"):
-        st.session_state.messages = []
-        st.rerun()
