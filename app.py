@@ -26,7 +26,7 @@ for message in st.session_state.messages:
 # User input
 prompt = st.chat_input("Ask me anything...")
 
-if prompt and prompt.strip():
+    if prompt and prompt.strip():
 
     st.session_state.messages.append(
         {"role": "user", "content": prompt}
@@ -35,12 +35,20 @@ if prompt and prompt.strip():
     with st.chat_message("user"):
         st.write(prompt)
 
+    system_prompt = f"""
+    You are Nepali AI.
+
+    User Message:
+    {prompt}
+    """
+
     response = model.generate_content(system_prompt)
 
     reply = response.text
 
     st.session_state.messages.append(
         {"role": "assistant", "content": reply}
+    )
     )
 
     with st.chat_message("assistant"):
